@@ -22,7 +22,7 @@ module.exports = function (passport) {
 
     process.nextTick(function () {
 
-      User.findOne({ username : username}, function (err, user) {
+      User.findOne({username: username}, function (err, user) {
         console.log('user===========', user);
         if (err) {
           console.log('err', err);
@@ -43,13 +43,35 @@ module.exports = function (passport) {
             if (err) {
               throw err;
             }
-            
-            // console.log('newUser', newUser);
+
             return done(null, newUser);
           })
         }
       });
     });
   }));
+
+  // LOCAL LOGIN //
+  passport.use('local-login', new LocalStrategy(function (username, password, done) {
+
+    process.nextTick(function () {
+
+      User.findOne({'username': username}, function (err, user) {
+        if (err) {
+          return done(err);
+        }
+        if (!user) {
+          return done(null, false);
+        }
+
+        if (!user.validPassword(password)) {
+          return done(null, false);
+        }
+
+        return done(null, user);
+      });
+    })
+  }));
+
 
 };
