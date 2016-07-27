@@ -2,6 +2,16 @@
 
 module.exports = function (app, passport) {
 
+  // MIDDLEWARE //
+  function testing(req, res, next) {
+    console.log('user id in the middleware', req.user.id);
+    if(req.user.id){
+      return next();
+    } else {
+      res.redirect('/loginFailure');
+    }
+  }
+
 
   //======================//
   // USER SIGN UP ROUTES //
@@ -54,6 +64,18 @@ module.exports = function (app, passport) {
     req.logout();
     res.redirect('/');
   });
+
+  // PROTECTED ROUTE //
+  app.get('/protected', testing, function (req, res, next) {
+    res.send('we are in!');
+  });
+
+  app.post('/protected', testing, function (req, res, next) {
+    console.log('req.body', req.body);
+    res.send('protected route worked.');
+
+
+  })
 
 
 };

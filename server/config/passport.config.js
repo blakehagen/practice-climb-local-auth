@@ -7,7 +7,7 @@ module.exports = function (passport) {
 
   // SERIALIZE USER //
   passport.serializeUser(function (user, done) {
-    done(null, user._id);
+    done(null, user.id);
   });
 
   // DESERIALIZE USER //
@@ -56,6 +56,10 @@ module.exports = function (passport) {
 
     process.nextTick(function () {
 
+      console.log('username', username);
+      console.log('password', password);
+
+
       User.findOne({'username': username}, function (err, user) {
         if (err) {
           return done(err);
@@ -64,7 +68,7 @@ module.exports = function (passport) {
           return done(null, false);
         }
 
-        if (!user.validPassword(password)) {
+        if (user.password !== password){
           return done(null, false);
         }
 

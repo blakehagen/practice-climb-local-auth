@@ -1,11 +1,11 @@
 'use strict';
 
 // MODULES //
-var express    = require('express');
-var session    = require('express-session');
-var bodyParser = require('body-parser');
-var cors       = require('cors');
-var logger     = require('morgan');
+const express    = require('express');
+const session    = require('express-session');
+const bodyParser = require('body-parser');
+const cors       = require('cors');
+const logger     = require('morgan');
 
 module.exports = function () {
 

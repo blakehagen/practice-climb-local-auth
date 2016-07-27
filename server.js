@@ -1,8 +1,8 @@
 'use strict';
 
 // MODULES & CONFIG //
-var app      = require('./server/config/express.config.js')();
-var passport = require('passport');
+const app      = require('./server/config/express.config.js')();
+const passport = require('passport');
 require('./server/config/db.config.js')();
 require('./server/config/passport.config')(passport);
 
@@ -16,12 +16,12 @@ app.use(passport.session());
 // ROUTES //
 require('./server/features/auth/auth.server.routes')(app, passport);
 
-app.get('/api/v1/test', function (req, res) {
-  res.status(200).send('HELLO WORLD!')
+app.get('/api/v1/test', (req,res) => {
+  res.status(200).send('HELLO WORLD! It works!');
 });
 
 
 // LISTEN //
-app.listen(port, function () {
+app.listen(port, () => {
   console.log('Listening on port', port);
 });
